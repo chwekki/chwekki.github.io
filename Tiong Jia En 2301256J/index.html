@@ -75,7 +75,6 @@
           <button class="Hotspot" slot="hotspot-4" data-surface="0 0 1935 1936 1937 0.607 0.146 0.248" data-visibility-attribute="visible">
             <div class="HotspotAnnotation">Detachable handles</div>
           </button>
-          
 
           <!-- Progress & AR button -->
           <div class="progress-bar hide" slot="progress-bar">
@@ -103,6 +102,15 @@
           </div>
         </div>
 
+        <!-- Select Colour Section -->
+        <div>
+          <h2 class="font-bold text-[15px] tracking-[0] leading-normal mb-2">Select Colour</h2>
+          <div class="flex gap-4">
+            <button id="blueBtn" class="border border-black rounded px-4 py-2 hover:bg-black hover:text-white" onclick="blue()">Blue</button>
+            <button id="lilacBtn" class="border border-black rounded px-4 py-2 hover:bg-black hover:text-white" onclick="lilac()">Lilac</button>
+          </div>
+        </div>
+
         <div class="space-y-2">
           <button class="w-full bg-black text-white py-3 rounded-full text-xl hover:bg-gray-900">Proceed</button>
           <button class="w-full bg-[#9bbbe2] text-white py-3 rounded-full text-xl hover:bg-[#88aad5]">Favourite</button>
@@ -112,22 +120,29 @@
 
     <!-- Scripts -->
     <script>
+      const model = document.getElementById('sp2');
+
       function setCamera(orbit, fov) {
-        const model = document.getElementById('sp2');
         model.cameraOrbit = orbit;
         model.fieldOfView = fov;
       }
 
       function runAnimation(name) {
-        const model = document.getElementById('sp2');
         model.animationName = name;
         model.play();
       }
 
       function pauseAnimation() {
-        document.getElementById('sp2').pause();
+        model.pause();
+      }
+
+      function blue() {
+        model.variantName = 'blue';
+      }
+
+      function lilac() {
+        model.variantName = 'lilac';
       }
     </script>
   </body>
-</html>
 </html>
