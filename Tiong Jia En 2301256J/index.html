@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Nike Connect Model Viewer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+    <style>
+      .HotspotAnnotation {
+        display: none;
+        position: absolute;
+        top: 25px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid #000;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        white-space: nowrap;
+        z-index: 10;
+        max-width: 200px;
+        text-align: center;
+      }
+
+      .Hotspot:hover .HotspotAnnotation {
+        display: block;
+      }
+
+      .Hotspot {
+        background: rgba(0, 0, 0, 0.5);
+        border: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        cursor: pointer;
+        position: relative;
+      }
+    </style>
+  </head>
+  <body class="bg-white text-black font-sans">
+
+    <!-- Navigation Tabs -->
+    <nav class="w-full bg-gray-200 py-3 flex justify-center space-x-4 text-sm font-bold">
+      <button onclick="setCamera('-89.1deg 91.67deg 3.598m','30deg')" class="hover:underline">Front View</button>
+      <button onclick="setCamera('-181.2deg 85.23deg 3.598m','30deg')" class="hover:underline">Side View</button>
+      <button onclick="setCamera('-270.6deg 89.35deg 3.598m','30deg')" class="hover:underline">Back View</button>
+      <button onclick="setCamera('-270.7deg 2.062deg 3.598m','35.08deg')" class="hover:underline">Top View</button>
+    </nav>
+
+    <!-- Main Section -->
+    <main class="max-w-7xl mx-auto p-8 flex flex-col md:flex-row items-start gap-8">
+
+      <!-- 3D Model -->
+      <div class="w-full md:w-2/3">
+        <model-viewer id="sp2"
+          src="my final dveglb.glb"
+          ar ar-modes="webxr scene-viewer quick-look"
+          camera-controls
+          tone-mapping="neutral"
+          shadow-intensity="1"
+          camera-orbit="-113.1deg 89.17deg 3.598m"
+          field-of-view="30deg"
+          style="width: 100%; height: 600px;"
+          interaction-prompt="none"
+        >
+          <!-- Hotspots -->
+          <button class="Hotspot" slot="hotspot-2" data-surface="12 0 40 138 47 0.404 0.264 0.331" data-visibility-attribute="visible">
+            <div class="HotspotAnnotation">Nike Logo</div>
+          </button>
+          <button class="Hotspot" slot="hotspot-3" data-surface="7 0 433 424 432 0.100 0.233 0.667" data-visibility-attribute="visible">
+            <div class="HotspotAnnotation">Beach wheels</div>
+          </button>
+          <button class="Hotspot" slot="hotspot-4" data-surface="0 0 1935 1936 1937 0.607 0.146 0.248" data-visibility-attribute="visible">
+            <div class="HotspotAnnotation">Detachable handles</div>
+          </button>
+          
+
+          <!-- Progress & AR button -->
+          <div class="progress-bar hide" slot="progress-bar">
+            <div class="update-bar"></div>
+          </div>
+          <button slot="ar-button" class="bg-blue-500 text-white px-4 py-2 rounded mt-4">View in your space</button>
+        </model-viewer>
+      </div>
+
+      <!-- Control Panel -->
+      <aside class="w-full md:w-1/3 space-y-6">
+        <div>
+          <h1 class="text-2xl font-semibold">Nike Connect</h1>
+          <p class="text-gray-600 mt-1">Arthritis friendly beach walking aid</p>
+        </div>
+
+        <div>
+          <h2 class="font-semibold text-lg mb-2">Select Animation</h2>
+          <div class="grid grid-cols-2 gap-2">
+            <button onclick="runAnimation('chair unfold')" class="border border-black rounded px-3 py-2 hover:bg-black hover:text-white">Chair Unfold</button>
+            <button onclick="runAnimation('stick extend')" class="border border-black rounded px-3 py-2 hover:bg-black hover:text-white">Stick Extend</button>
+            <button onclick="runAnimation('handle remove')" class="border border-black rounded px-3 py-2 hover:bg-black hover:text-white">Handle Remove</button>
+            <button onclick="runAnimation('tools')" class="border border-black rounded px-3 py-2 hover:bg-black hover:text-white">Tools</button>
+            <button onclick="pauseAnimation()" class="col-span-2 bg-gray-800 text-white py-2 rounded hover:bg-gray-700">Pause</button>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <button class="w-full bg-black text-white py-3 rounded-full text-xl hover:bg-gray-900">Proceed</button>
+          <button class="w-full bg-[#9bbbe2] text-white py-3 rounded-full text-xl hover:bg-[#88aad5]">Favourite</button>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Scripts -->
+    <script>
+      function setCamera(orbit, fov) {
+        const model = document.getElementById('sp2');
+        model.cameraOrbit = orbit;
+        model.fieldOfView = fov;
+      }
+
+      function runAnimation(name) {
+        const model = document.getElementById('sp2');
+        model.animationName = name;
+        model.play();
+      }
+
+      function pauseAnimation() {
+        document.getElementById('sp2').pause();
+      }
+    </script>
+  </body>
+</html>
+</html>
